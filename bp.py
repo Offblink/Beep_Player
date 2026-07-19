@@ -166,7 +166,7 @@ def play(notes: list[Note]):
         # PowerShell fallback — single loop, minimal overhead
         fa = ", ".join(str(round(n.freq)) if n.freq > 0 else "0" for n in notes)
         da = ", ".join(str(n.dur_ms) for n in notes)
-        ps = f"$f=@({fa});$d=@({da});for($i=0;$i-lt$f.Count;$i++){{if($f[$i]-eq0){{Start-Sleep -m $d[$i]}}else{{[Console]::Beep($f[$i],$d[$i])}}}}"
+        ps = f"$f=@({fa});$d=@({da});for($i=0;$i-lt$f.Count;$i++){{if($f[$i]-eq0){{Start-Sleep -m $d[$i]}}else{{[Console]::Beep($f[$i],$d[$i]);Start-Sleep -m ($d[$i]+5)}}}}"
         subprocess.run(["powershell", "-NoProfile", "-Command", ps])
 
 def export(notes: list[Note], path: Path):
