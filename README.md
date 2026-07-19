@@ -1,6 +1,6 @@
 # Beep_Player
 
-**ABC notation → PC speaker beeps.** 给 `.abc` 乐谱文件一个终端命令，它给你蜂鸣。
+**ABC notation → PC speaker beeps.** Drop an `.abc` file, get a melody played through the motherboard speaker.
 
 ```
 $ bp twinkle
@@ -21,44 +21,44 @@ build.cmd
 alias bp='python /path/to/Beep_Player/bp.py'
 ```
 
-Requires Python 3.10+ (no pip deps) and `csc.exe` (included in any Windows with .NET Framework 4.x).
+Requires Python 3.10+ (zero pip dependencies) and `csc.exe` (bundled with .NET Framework 4.x on Windows).
 
 ## Usage
 
 ```bash
-bp twinkle              # 小星星
-bp ode                  # 欢乐颂
-bp happy                # 生日快乐
-bp scale                # C 大调音阶
-bp mario                # 超级玛丽主题
+bp twinkle              # Twinkle Twinkle Little Star
+bp ode                  # Ode to Joy
+bp happy                # Happy Birthday
+bp scale                # C Major scale
+bp mario                # Super Mario Bros theme
 
-bp my_song.abc          # 播放你自己的 ABC 文件
-bp my_song.abc --tempo 180  # 调速 (BPM)
-bp my_song.abc -o out.bat   # 导出独立 .bat（可双击播放）
-bp my_song.abc -o out.json  # 导出 JSON 数据
+bp my_song.abc           # play your own ABC file
+bp my_song.abc --tempo 180   # override tempo (BPM)
+bp my_song.abc -o out.bat    # export standalone .bat (double-click to play)
+bp my_song.abc -o out.json   # export JSON
 
-bp --list               # 列出内置曲目
+bp --list               # list built-in songs
 ```
 
 ## ABC Notation Quick Reference
 
-ABC 是一种纯文本记谱法，用来记录单旋律非常方便。
+[ABC notation](https://abcnotation.com/) is a plain-text music notation format — perfect for single-voice melodies.
 
 ```
-X:1                     # 文件头（必须有）
-T:Twinkle Twinkle       # 曲名
-M:4/4                   # 拍号
-L:1/4                   # 默认音符长度（四分音符）
-K:C                     # 调号（C 大调）
+X:1                     # file header (required)
+T:Song Title            # title
+M:4/4                   # time signature
+L:1/4                   # default note length (quarter note)
+K:C                     # key signature (C major)
 
-C C G G | A A G2 |      # C D E F G A B = Do Re Mi Fa Sol La Ti
-F F E E | D D C2 |      # 大写=中音区，小写=高八度
-                        # C2=二分音符，C/2=八分音符
-                        # z=休止符，|=小节线
-                        # ^=升号，_=降号
+C C G G | A A G2 |      # C D E F G A B — uppercase = middle octave
+F F E E | D D C2 |      # lowercase = one octave higher
+                        # C2 = half note, C/2 = eighth note
+                        # z = rest, | = bar line
+                        # ^ = sharp, _ = flat
 ```
 
-网上海量 ABC 曲库：[abcnotation.com](https://abcnotation.com/)，folk / traditional 为主。
+Huge library of ABC tunes at [abcnotation.com](https://abcnotation.com/).
 
 ## How It Works
 
@@ -66,15 +66,15 @@ F F E E | D D C2 |      # 大写=中音区，小写=高八度
 .abc file → Python parser → (freq, dur) pairs → beep_player.exe → kernel32::Beep
 ```
 
-- `bp.py` — ABC 解析器，约 240 行，零依赖
-- `beep_player.exe` — 编译好的 C# 原生播放器，直接调用 `kernel32::Beep`，零脚本开销
-- `build.cmd` — 从 `beep_player.cs` 源码编译
+- `bp.py` — ABC parser, ~240 lines, zero dependencies
+- `beep_player.exe` — compiled C# native player, calls `kernel32::Beep` directly with no scripting overhead
+- `build.cmd` — compiles `beep_player.cs` into `beep_player.exe`
 
-如果 `beep_player.exe` 不存在，自动回退到 PowerShell 播放。
+If `beep_player.exe` is not found, falls back to PowerShell playback automatically.
 
 ## Why
 
-因为 PC 蜂鸣器很好玩。就这么简单。
+Because PC speaker beeps are fun. That's it.
 
 ## License
 
