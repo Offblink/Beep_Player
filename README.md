@@ -14,13 +14,13 @@ Twinkle Twinkle Little Star  [120BPM C]  42 notes
 git clone https://github.com/Offblink/Beep_Player.git
 cd Beep_Player
 
-# 2. Alias (add to ~/.bashrc or ~/.zshrc)
-alias bp='python /path/to/Beep_Player/bp.py'
+# 2. Add to PATH (so `bp` works from any directory)
+export PATH="/path/to/Beep_Player:$PATH"
 ```
-Requires Python 3.10+ (zero pip dependencies). The native player `beep_player.exe` is pre-built — no compilation needed.
+
+Requires Python 3.10+.
 
 ## Usage
-
 ```bash
 bp twinkle              # Twinkle Twinkle Little Star
 bp ode                  # Ode to Joy
