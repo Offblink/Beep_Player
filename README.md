@@ -11,8 +11,8 @@ Twinkle Twinkle Little Star  [120BPM C]  42 notes
 
 ```bash
 # 1. Clone
-git clone <this-repo>
-cd bp
+git clone https://github.com/Offblink/Beep_Player.git
+cd Beep_Player
 
 # 2. Build the native player (needs .NET Framework, ships with Windows)
 build.cmd
