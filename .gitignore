@@ -1,0 +1,15 @@
+# Compiled native player binary
+beep_player.exe
+
+# Python
+__pycache__/
+*.pyc
+
+# Exports (user-generated)
+*.bat
+*.ps1
+*.json
+
+# OS
+Thumbs.db
+.DS_Store
