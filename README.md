@@ -1,4 +1,4 @@
-# bp
+# Beep_Player
 
 **ABC notation → PC speaker beeps.** 给 `.abc` 乐谱文件一个终端命令，它给你蜂鸣。
 
@@ -18,7 +18,7 @@ cd Beep_Player
 build.cmd
 
 # 3. Alias (add to ~/.bashrc or ~/.zshrc)
-alias bp='python /path/to/bp/bp.py'
+alias bp='python /path/to/Beep_Player/bp.py'
 ```
 
 Requires Python 3.10+ (no pip deps) and `csc.exe` (included in any Windows with .NET Framework 4.x).
