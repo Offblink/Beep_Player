@@ -6,8 +6,6 @@ class BeepPlayer
     [DllImport("kernel32.dll")]
     static extern bool Beep(int freq, int dur);
 
-    const int MAX_CHUNK = 500;
-
     static void Main(string[] args)
     {
         if (args.Length < 2) return;
@@ -19,13 +17,7 @@ class BeepPlayer
             int dur  = int.Parse(d[i]);
             if (freq > 0)
             {
-                int remaining = dur;
-                while (remaining > 0)
-                {
-                    int chunk = Math.Min(remaining, MAX_CHUNK);
-                    Beep(freq, chunk);
-                    remaining -= chunk;
-                }
+                Beep(freq, dur);
                 System.Threading.Thread.Sleep(dur + 5);
             }
             else

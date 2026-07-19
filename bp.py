@@ -154,20 +154,13 @@ def parse_abc(text: str) -> Tune:
     return t
 
 # ── output ─────────────────────────────────────────────────────────────
-BEEP_EXE = Path(__file__).parent / "beep_player.exe"
 
 def play(notes: list[Note]):
     if not notes: return
-    if BEEP_EXE.exists():
-        fs = ",".join(str(round(n.freq)) if n.freq > 0 else "0" for n in notes)
-        ds = ",".join(str(n.dur_ms) for n in notes)
-        subprocess.run([str(BEEP_EXE), fs, ds])
-    else:
-        # PowerShell fallback — single loop, minimal overhead
-        fa = ", ".join(str(round(n.freq)) if n.freq > 0 else "0" for n in notes)
-        da = ", ".join(str(n.dur_ms) for n in notes)
-        ps = f"$f=@({fa});$d=@({da});for($i=0;$i-lt$f.Count;$i++){{if($f[$i]-eq0){{Start-Sleep -m $d[$i]}}else{{[Console]::Beep($f[$i],$d[$i]);Start-Sleep -m ($d[$i]+5)}}}}"
-        subprocess.run(["powershell", "-NoProfile", "-Command", ps])
+    fa = ", ".join(str(round(n.freq)) if n.freq > 0 else "0" for n in notes)
+    da = ", ".join(str(n.dur_ms) for n in notes)
+    ps = f"$f=@({fa});$d=@({da});for($i=0;$i-lt$f.Count;$i++){{if($f[$i]-eq0){{Start-Sleep -m $d[$i]}}else{{[Console]::Beep($f[$i],$d[$i]);Start-Sleep -m ($d[$i]+5)}}}}"
+    subprocess.run(["powershell", "-NoProfile", "-Command", ps])
 
 def export(notes: list[Note], path: Path):
     suf = path.suffix.lower()
