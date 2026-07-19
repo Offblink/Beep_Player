@@ -8,7 +8,8 @@ class BeepPlayer
     static extern bool Beep(int freq, int dur);
 
     const int MAX_CHUNK = 500;
-    const int MIN_CHUNK = 30;
+    const int MIN_CHUNK = 50;
+    const int FREQ_SWITCH_GAP = 15;
 
     static void DoBeep(int freq, int durMs)
     {
@@ -28,13 +29,28 @@ class BeepPlayer
         var d = args[1].Split(',');
         var sw = Stopwatch.StartNew();
         long target = 0;
+        int prevFreq = 0;
         for (int i = 0; i < f.Length; i++)
         {
             int freq = int.Parse(f[i]);
             int dur  = int.Parse(d[i]);
-            target += dur;
-            if (freq > 0) DoBeep(freq, dur);
-            else System.Threading.Thread.Sleep(dur);
+            if (freq > 0)
+            {
+                if (prevFreq > 0 && freq != prevFreq)
+                {
+                    target += FREQ_SWITCH_GAP;
+                    System.Threading.Thread.Sleep(FREQ_SWITCH_GAP);
+                }
+                target += dur;
+                DoBeep(freq, dur);
+                prevFreq = freq;
+            }
+            else
+            {
+                target += dur;
+                System.Threading.Thread.Sleep(dur);
+                prevFreq = 0;
+            }
             while (sw.ElapsedMilliseconds < target)
                 System.Threading.Thread.Sleep(10);
         }
