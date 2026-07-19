@@ -159,9 +159,11 @@ def play(notes: list[Note]):
     if not notes: return
     fa = ", ".join(str(round(n.freq)) if n.freq > 0 else "0" for n in notes)
     da = ", ".join(str(n.dur_ms) for n in notes)
-    ps = f"$f=@({fa});$d=@({da});for($i=0;$i-lt$f.Count;$i++){{if($f[$i]-eq0){{Start-Sleep -m $d[$i]}}else{{[Console]::Beep($f[$i],$d[$i]);Start-Sleep -m ($d[$i]+5)}}}}"
-    subprocess.run(["powershell", "-NoProfile", "-Command", ps])
-
+    ps = f"Start-Sleep -m 200;$f=@({fa});$d=@({da});for($i=0;$i-lt$f.Count;$i++){{if($f[$i]-eq0){{Start-Sleep -m $d[$i]}}else{{[Console]::Beep($f[$i],$d[$i]);Start-Sleep -m ($d[$i]+5)}}}}"
+    tmp = Path(__file__).parent / "_play.ps1"
+    tmp.write_text(ps, encoding="utf-8")
+    subprocess.run(["powershell", "-NoProfile", "-File", str(tmp)])
+    tmp.unlink(missing_ok=True)
 def export(notes: list[Note], path: Path):
     suf = path.suffix.lower()
     if suf == ".json":
