@@ -7,7 +7,19 @@ class BeepPlayer
     [DllImport("kernel32.dll")]
     static extern bool Beep(int freq, int dur);
 
-    const int MAX_BEEP_MS = 500;
+    const int MAX_CHUNK = 500;
+    const int MIN_CHUNK = 30;
+
+    static void DoBeep(int freq, int durMs)
+    {
+        int remaining = durMs;
+        while (remaining >= MIN_CHUNK)
+        {
+            int chunk = Math.Min(remaining, MAX_CHUNK);
+            Beep(freq, chunk);
+            remaining -= chunk;
+        }
+    }
 
     static void Main(string[] args)
     {
@@ -21,21 +33,12 @@ class BeepPlayer
             int freq = int.Parse(f[i]);
             int dur  = int.Parse(d[i]);
             target += dur;
-            if (freq > 0)
-            {
-                int remaining = dur;
-                while (remaining > 0)
-                {
-                    int chunk = Math.Min(remaining, MAX_BEEP_MS);
-                    Beep(freq, chunk);
-                    remaining -= chunk;
-                }
-            }
+            if (freq > 0) DoBeep(freq, dur);
             else System.Threading.Thread.Sleep(dur);
             while (sw.ElapsedMilliseconds < target)
-                System.Threading.Thread.Sleep(1);
+                System.Threading.Thread.Sleep(10);
         }
         while (sw.ElapsedMilliseconds < target)
-            System.Threading.Thread.Sleep(1);
+            System.Threading.Thread.Sleep(10);
     }
 }
