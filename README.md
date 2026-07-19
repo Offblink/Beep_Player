@@ -14,14 +14,10 @@ Twinkle Twinkle Little Star  [120BPM C]  42 notes
 git clone https://github.com/Offblink/Beep_Player.git
 cd Beep_Player
 
-# 2. Build the native player (needs .NET Framework, ships with Windows)
-build.cmd
-
-# 3. Alias (add to ~/.bashrc or ~/.zshrc)
+# 2. Alias (add to ~/.bashrc or ~/.zshrc)
 alias bp='python /path/to/Beep_Player/bp.py'
 ```
-
-Requires Python 3.10+ (zero pip dependencies) and `csc.exe` (bundled with .NET Framework 4.x on Windows).
+Requires Python 3.10+ (zero pip dependencies). The native player `beep_player.exe` is pre-built — no compilation needed.
 
 ## Usage
 
@@ -67,14 +63,8 @@ Huge library of ABC tunes at [abcnotation.com](https://abcnotation.com/).
 ```
 
 - `bp.py` — ABC parser, ~240 lines, zero dependencies
-- `beep_player.exe` — compiled C# native player, calls `kernel32::Beep` directly with no scripting overhead
-- `build.cmd` — compiles `beep_player.cs` into `beep_player.exe`
-
-If `beep_player.exe` is not found, falls back to PowerShell playback automatically.
-
-## Why
-
-Because PC speaker beeps are fun. That's it.
+- `beep_player.exe` — compiled C# native player, calls `kernel32::Beep` directly
+- `beep_player.cs` — source for the native player (modify and recompile if needed)
 
 ## License
 
