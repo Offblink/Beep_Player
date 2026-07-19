@@ -59,12 +59,11 @@ Huge library of ABC tunes at [abcnotation.com](https://abcnotation.com/).
 ## How It Works
 
 ```
-.abc file → Python parser → (freq, dur) pairs → beep_player.exe → kernel32::Beep
+.abc file → Python parser → (freq, dur) pairs → PowerShell [Console]::Beep
 ```
 
-- `bp.py` — ABC parser, ~240 lines, zero dependencies
-- `beep_player.exe` — compiled C# native player, calls `kernel32::Beep` directly
-- `beep_player.cs` — source for the native player (modify and recompile if needed)
+- `bp.py` — ABC parser, ~240 lines, zero dependencies. Generates a temp `.ps1` and runs it.
+- `beep_player.cs` — optional native player source (compile with `csc` if you prefer an `.exe`)
 
 ## License
 
